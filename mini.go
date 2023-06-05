@@ -72,6 +72,10 @@ func (mini *Mini) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 
+			fmt.Println("r.method", r.Method)
+			fmt.Println("r.URL.PATH", r.URL.Path)
+			fmt.Println("r.Response.StatusCode", r.Response.StatusCode)
+
 			// utils.LogResponse(r.Method, r.URL.Path, r.Response.StatusCode)
 
 			return
