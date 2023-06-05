@@ -1,4 +1,4 @@
-package main
+package mini
 
 type Route struct {
 	Path       string
