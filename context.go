@@ -65,6 +65,7 @@ func (c *Context) OkResponse(data interface{}, token string) {
 	if token != "" {
 		c.Response.SetHeader("Authorization ", fmt.Sprintf("Bearer %s", token))
 	}
+	c.Request.Response.StatusCode = http.StatusOK
 	c.Response.StatusCode(http.StatusOK)
 	c.Response.JSON(data)
 	return
