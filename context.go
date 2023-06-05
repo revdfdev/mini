@@ -61,18 +61,19 @@ func (c *Context) ShouldGet(key string) any {
 }
 
 func (c *Context) OkResponse(data interface{}, token string) {
-
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization ", fmt.Sprintf("Bearer %s", token))
 	}
-	c.Request.Response.StatusCode = http.StatusOK
 	c.Response.StatusCode(http.StatusOK)
 	c.Response.JSON(data)
 	return
 }
 
 func (c *Context) CreatedResponse(data interface{}, token string) {
-
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization ", fmt.Sprintf("Bearer %s", token))
 	}
@@ -83,6 +84,8 @@ func (c *Context) CreatedResponse(data interface{}, token string) {
 }
 
 func (c *Context) InternalServerError(data interface{}, token string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
@@ -94,6 +97,8 @@ func (c *Context) InternalServerError(data interface{}, token string) {
 }
 
 func (c *Context) BadRequest(data interface{}, token string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
@@ -104,6 +109,8 @@ func (c *Context) BadRequest(data interface{}, token string) {
 }
 
 func (c *Context) NotFound(data interface{}, token string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
@@ -113,6 +120,8 @@ func (c *Context) NotFound(data interface{}, token string) {
 }
 
 func (c *Context) MovedPermenantly(location, token string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
@@ -122,6 +131,8 @@ func (c *Context) MovedPermenantly(location, token string) {
 }
 
 func (c *Context) UnAuthorized(data interface{}, token string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
