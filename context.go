@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
@@ -8,6 +9,22 @@ import (
 type Context struct {
 	Request  *Request
 	Response *Response
+}
+
+func (c *Context) BindJson(obj interface{}) error {
+	if err := json.NewDecoder(c.Request.Body).Decode(obj); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (c *Context) ParseMultiParForm() error {
+	if err := c.Request.ParseMultipartForm(defaultMaxMemory); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func (c *Context) OkResponse(data interface{}, token string) {

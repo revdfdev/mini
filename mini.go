@@ -10,6 +10,8 @@ import (
 	"github.com/revdfdev/mini/utils"
 )
 
+const defaultMaxMemory = 25 * 60
+
 type Mini struct {
 	router      *http.ServeMux
 	routes      []*Route
