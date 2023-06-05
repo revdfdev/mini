@@ -13,11 +13,13 @@ import (
 const defaultMaxMemory = 25 * 60
 
 type Mini struct {
-	router      *http.ServeMux
-	routes      []*Route
-	baseURL     string
-	middlewares []MiddlewareFunc
-	mutex       sync.Mutex
+	router       *http.ServeMux
+	routes       []*Route
+	baseURL      string
+	middlewares  []MiddlewareFunc
+	corsConfig   *CorsConfig
+	corConfigSet bool
+	mutex        sync.Mutex
 }
 
 func NewMini() *Mini {
@@ -114,8 +116,15 @@ func (mini *Mini) TRACE(route string, handler HandlerFunc, middleware ...Middlew
 
 func (mini *Mini) Run(addr string) error {
 	mini.printWelcomeMessage(addr)
+	mini.printCorsStatus()
 	mini.printRoutes()
 	return http.ListenAndServe(addr, mini)
+}
+
+func (mini *Mini) printCorsStatus() {
+	if !mini.corConfigSet {
+		color.Magenta("Warning: CORS configuration not provided. CORS headers will not be added to responses.")
+	}
 }
 
 func (mini *Mini) printWelcomeMessage(addr string) {
