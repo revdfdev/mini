@@ -65,7 +65,8 @@ func (c *Context) OkResponse(data interface{}, token string) {
 	if token != "" {
 		c.Response.SetHeader("Authorization ", fmt.Sprintf("Bearer %s", token))
 	}
-	c.Response.StatusCode(http.StatusOK).JSON(data)
+	c.Response.StatusCode(http.StatusOK)
+	c.Response.JSON(data)
 	return
 }
 
@@ -75,7 +76,8 @@ func (c *Context) CreatedResponse(data interface{}, token string) {
 		c.Response.SetHeader("Authorization ", fmt.Sprintf("Bearer %s", token))
 	}
 
-	c.Response.StatusCode(http.StatusCreated).JSON(data)
+	c.Response.StatusCode(http.StatusCreated)
+	c.Response.JSON(data)
 	return
 }
 
@@ -84,7 +86,8 @@ func (c *Context) InternalServerError(data interface{}, token string) {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
 
-	c.Response.StatusCode(http.StatusInternalServerError).JSON(data)
+	c.Response.StatusCode(http.StatusInternalServerError)
+	c.Response.JSON(data)
 
 	return
 }
@@ -94,7 +97,8 @@ func (c *Context) BadRequest(data interface{}, token string) {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
 
-	c.Response.StatusCode(http.StatusBadRequest).JSON(data)
+	c.Response.StatusCode(http.StatusBadRequest)
+	c.Response.JSON(data)
 	return
 }
 
@@ -102,7 +106,8 @@ func (c *Context) NotFound(data interface{}, token string) {
 	if token != "" {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
-	c.Response.StatusCode(http.StatusNotFound).JSON(data)
+	c.Response.StatusCode(http.StatusNotFound)
+	c.Response.JSON(data)
 	return
 }
 
@@ -120,6 +125,7 @@ func (c *Context) UnAuthorized(data interface{}, token string) {
 		c.Response.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	}
 
-	c.Response.StatusCode(http.StatusUnauthorized).JSON(data)
+	c.Response.StatusCode(http.StatusUnauthorized)
+	c.Response.JSON(data)
 	return
 }

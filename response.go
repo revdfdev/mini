@@ -9,14 +9,12 @@ type Response struct {
 	http.ResponseWriter
 }
 
-func (r *Response) StatusCode(code int) *Response {
+func (r *Response) StatusCode(code int) {
 	r.WriteHeader(code)
-	return r
 }
 
-func (r *Response) SetHeader(key, value string) *Response {
+func (r *Response) SetHeader(key, value string) {
 	r.Header().Set(key, value)
-	return r
 }
 
 func (r *Response) JSON(data interface{}) (*Response, error) {
