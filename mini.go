@@ -74,7 +74,7 @@ func (mini *Mini) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 			fmt.Println("r.method", r.Method)
 			fmt.Println("r.URL.PATH", r.URL.Path)
-			fmt.Println("r.Response.StatusCode", r.Response.Status)
+			fmt.Println("r.Response.StatusCode", r.Response)
 
 			// utils.LogResponse(r.Method, r.URL.Path, r.Response.StatusCode)
 
