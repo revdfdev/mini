@@ -61,8 +61,8 @@ func (c *Context) ShouldGet(key string) any {
 }
 
 func (c *Context) OkResponse(data interface{}, token string) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
+	// c.mu.Lock()
+	// defer c.mu.Unlock()
 	if token != "" {
 		c.Response.SetHeader("Authorization ", fmt.Sprintf("Bearer %s", token))
 	}
