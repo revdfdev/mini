@@ -73,8 +73,9 @@ func (mini *Mini) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	for _, route := range routes {
 		if route.Method == r.Method && strings.HasPrefix(r.URL.Path, route.Path) {
 			namedRoutes := route.namedRoutes
+			fmt.Println("NAMED ROUTES ", namedRoutes)
 			var node HandlerFunc
-			if r.URL.Path == namedRoutes.RouteName {
+			if route.Path == namedRoutes.RouteName {
 				node = namedRoutes.handler
 			}
 			for i := len(route.middleware) - 1; i >= 0; i-- {
