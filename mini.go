@@ -140,7 +140,7 @@ func (mini *Mini) printWelcomeMessage(addr string) {
 func (mini *Mini) printRoutes() {
 	color.Yellow("Registered Routes:")
 	for _, route := range mini.routes {
-		color.Green("%s\t%s", route.Method, route.Path)
+		color.Green("%s\t%s\t%s", route.Method, route.Path, route.handler)
 	}
 	fmt.Println()
 }
