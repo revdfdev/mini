@@ -21,6 +21,16 @@ func (mini *Mini) Group(prefix string) *RouterGroup {
 	}
 }
 
+func (group *RouterGroup) Group(prefix string) *RouterGroup {
+	prefix = strings.TrimRight(prefix, "/")
+
+	return &RouterGroup{
+		baseURL:    group.baseURL + prefix,
+		middleware: group.middleware,
+		Mini:       group.Mini,
+	}
+}
+
 func (g *RouterGroup) Use(middleware ...MiddlewareFunc) {
 	g.middleware = append(g.middleware, middleware...)
 }
