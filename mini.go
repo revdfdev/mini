@@ -33,11 +33,16 @@ func (mini *Mini) addRoute(method, path string, handler HandlerFunc, middleware 
 	mini.mutex.Lock()
 	defer mini.mutex.Unlock()
 
+	named := &NameRoutes{
+		RouteName: mini.baseURL + path,
+		handler:   handler,
+	}
+
 	mini.routes = append(mini.routes, &Route{
-		Path:       mini.baseURL + path,
-		Method:     method,
-		handler:    handler,
-		middleware: append(middleware, middleware...),
+		Path:        mini.baseURL + path,
+		Method:      method,
+		namedRoutes: named,
+		middleware:  append(middleware, middleware...),
 	})
 }
 
@@ -67,11 +72,15 @@ func (mini *Mini) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	for _, route := range routes {
 		if route.Method == r.Method && strings.HasPrefix(r.URL.Path, route.Path) {
-			handler := route.handler
-			for i := len(route.middleware) - 1; i >= 0; i-- {
-				handler = route.middleware[i](handler)
+			namedRoutes := route.namedRoutes
+			var node HandlerFunc
+			if r.URL.Path == namedRoutes.RouteName {
+				node = namedRoutes.handler
 			}
-			err := handler(c)
+			for i := len(route.middleware) - 1; i >= 0; i-- {
+				node = route.middleware[i](node)
+			}
+			err := node(c)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
@@ -140,7 +149,7 @@ func (mini *Mini) printWelcomeMessage(addr string) {
 func (mini *Mini) printRoutes() {
 	color.Yellow("Registered Routes:")
 	for _, route := range mini.routes {
-		color.Green("%s\t%s\t%s", route.Method, route.Path, route.handler.Name(route.handler))
+		color.Green("%s\t%s\t%s", route.Method, route.Path, route.namedRoutes.RouteName)
 	}
 	fmt.Println()
 }

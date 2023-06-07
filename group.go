@@ -39,11 +39,16 @@ func (g *RouterGroup) addRoutes(method, route string, handler HandlerFunc, middl
 	g.Mini.mutex.Lock()
 	defer g.Mini.mutex.Unlock()
 
+	namedRoutes := &NameRoutes{
+		RouteName: g.baseURL + route,
+		handler:   handler,
+	}
+
 	g.Mini.routes = append(g.Mini.routes, &Route{
-		Path:       g.baseURL + route,
-		Method:     method,
-		handler:    handler,
-		middleware: append(g.middleware, middleware...),
+		Path:        g.baseURL + route,
+		Method:      method,
+		namedRoutes: namedRoutes,
+		middleware:  append(g.middleware, middleware...),
 	})
 }
 
