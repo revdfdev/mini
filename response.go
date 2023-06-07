@@ -7,10 +7,12 @@ import (
 
 type Response struct {
 	http.ResponseWriter
+	Status int
 }
 
 func (r *Response) StatusCode(code int) {
 	r.WriteHeader(code)
+	r.Status = code
 }
 
 func (r *Response) SetHeader(key, value string) {

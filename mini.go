@@ -49,7 +49,10 @@ func (mini *Mini) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		r,
 	}
 
-	response := &Response{w}
+	response := &Response{
+		ResponseWriter: w,
+		Status:         0,
+	}
 
 	c := &Context{
 		Request:  request,
@@ -74,7 +77,8 @@ func (mini *Mini) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 			fmt.Println("r.method", r.Method)
 			fmt.Println("r.URL.PATH", r.URL.Path)
-			fmt.Println("r.Response.StatusCode", r.Response)
+			fmt.Println("w.Status", response.Status)
+			// fmt.Println("r.Response.StatusCode", r.Response.StatusCode)
 
 			// utils.LogResponse(r.Method, r.URL.Path, r.Response.StatusCode)
 
