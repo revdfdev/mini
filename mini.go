@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
+	"github.com/revdfdev/mini/utils"
 )
 
 const defaultMaxMemory = 25 * 60
@@ -75,12 +76,7 @@ func (mini *Mini) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 
-			fmt.Println("r.method", r.Method)
-			fmt.Println("r.URL.PATH", r.URL.Path)
-			fmt.Println("w.Status", response.Status)
-			// fmt.Println("r.Response.StatusCode", r.Response.StatusCode)
-
-			// utils.LogResponse(r.Method, r.URL.Path, r.Response.StatusCode)
+			utils.LogResponse(r.Method, r.URL.Path, response.Status)
 
 			return
 		}
